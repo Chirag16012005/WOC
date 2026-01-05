@@ -3,7 +3,7 @@ const express = require('express');
 require('dotenv').config();
 const app = express();
 
-const {getTasks, addTask, deleteTask} = require('./modules/taskManager');
+const {getTasks, addTask, deleteTask, TaskCompletion} = require('./modules/taskManager');
 
 const command = process.argv[2];
 const argument = process.argv[3];
@@ -20,6 +20,10 @@ else if (command==="list")
 else if(command==="delete"){
   deleteTask(argument);
   console.log("Task deleted");
+}
+else if(command==="complete"){
+  TaskCompletion(argument);
+  console.log("Task completed");
 }
 else {
   console.log("Usage:");

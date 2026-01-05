@@ -49,4 +49,19 @@ function deleteTask(taskId)
     console.log("Task deleted");
 }
 
-module.exports={getTasks,addTask,deleteTask};
+function TaskCompletion(taskId)
+{
+    const tasks=getTasks();
+    const taskIndex=tasks.findIndex(task=>task.id===taskId);
+
+    if (taskIndex===-1)
+    {
+        console.log("Task not found");
+        return;
+    }
+    tasks[taskIndex].completed=true;
+    fs.writeFileSync(tasksFilePath,JSON.stringify(tasks,null,2));
+    console.log("Task marked as completed");
+}
+
+module.exports={getTasks,addTask,deleteTask,TaskCompletion};
