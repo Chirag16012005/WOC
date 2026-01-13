@@ -31,7 +31,6 @@ router.post("/", (req, res) =>
   res.status(201).json(newNote);
 });
 
-// PUT update note
 router.put("/:id", (req, res) => 
 {
   const id = Number(req.params.id);
@@ -50,7 +49,6 @@ router.put("/:id", (req, res) =>
   res.json(note);
 });
 
-// DELETE note
 router.delete("/:id", (req, res) => 
 {
   const id = Number(req.params.id);
