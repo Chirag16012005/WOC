@@ -1,86 +1,23 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import Notes from "./pages/Notes";
 
-const API_URL = "http://localhost:8008/notes";
-
-function App() {
-  const [notes, setNotes]=useState([]);
-  const [title, setTitle]= useState("");
-  const [content, setContent] = useState("");
-  const [editingId, setEditingId] = useState(null);
-
-  useEffect(() => {
-    fetchNotes();
-  }, []);
-
-  const fetchNotes = async () =>
-  {
-    const res = await axios.get(API_URL);
-    setNotes(res.data);
-  };
-  const addNote = async () => {
-    if (!title || !content || editingId) return;
-
-    await axios.post(API_URL, { title, content });
-    setTitle("");
-    setContent("");
-    fetchNotes();
-  };
-
-  const beginEdit = (note) => {
-    setEditingId(note.id);
-    setTitle(note.title);
-    setContent(note.content);
-  };
-
-  const updateNote = async () => {
-    if (!editingId || !title || !content) return;
-
-    await axios.put(`${API_URL}/${editingId}`, { title, content });
-    setEditingId(null);
-    setTitle("");
-    setContent("");
-    fetchNotes();
-  };
-
-  const deleteNote = async (id) => {
-    await axios.delete(`${API_URL}/${id}`);
-    fetchNotes();
-  };
-
+export default function App() {
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Notes App</h2>
-
-      <input
-        placeholder="Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-      />
-      <br /><br />
-
-      <textarea
-        placeholder="Content"
-        value={content}
-        onChange={e => setContent(e.target.value)}
-      />
-      <br /><br />
-
-      <button onClick={addNote}>Add Note</button>
-      <button onClick={updateNote} disabled={!editingId}>Update Note</button>
-
-      <hr />
-
-      {notes.map(note => (
-        <div key={note.id} style={{ marginBottom: "10px" }}>
-          <h4>{note.title}</h4>
-          <p>{note.content}</p>
-          <button onClick={() => beginEdit(note)}>Edit</button>
-          <button onClick={() => deleteNote(note.id)}>Delete</button>
-        </div>
-      ))}
-    </div>
+    <BrowserRouter>
+      <div>
+        <nav>
+          <Link to="/">Home</Link> | <Link to="/login">Login</Link> | <Link to="/signup">Signup</Link> | <Link to="/notes">Notes</Link>
+        </nav>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/notes" element={<Notes />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
-
-export default App;

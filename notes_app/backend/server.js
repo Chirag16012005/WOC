@@ -1,15 +1,19 @@
+require("dotenv").config();
 const express = require("express");
-const cors=require("cors");
-const app=express();
-const notesRouter=require("./routers/notes");
-const PORT=8008;
+const mongoose = require("mongoose");
+const cors = require("cors");
 
+const connectDB = require("./config/db");
+const authRoutes = require("./routers/authRoutes");
+const noteRoutes = require("./routers/notes");
+
+const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.use("/notes", notesRouter);
+connectDB();
 
-app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
-});
+app.use("/auth", authRoutes);
+app.use("/notes", noteRoutes);
+
+app.listen(5000, () => console.log("Server running"));
