@@ -35,7 +35,7 @@ exports.deleteNote = async (req, res) => {
 };
 
 exports.updateNote = async (req, res) => {
-    const { id } = req.params;
+    const {id}=req.params;
     const { title, content } = req.body;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid note ID" });
