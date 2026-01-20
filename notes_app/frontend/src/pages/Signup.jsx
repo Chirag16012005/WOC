@@ -8,7 +8,7 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [otp, setOtp] = useState("");
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(1); //1: send otp, 2: verify otp
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 

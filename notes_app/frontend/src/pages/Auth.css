@@ -23,7 +23,6 @@
   padding: 28px;
   border-radius: 16px;
   background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%), var(--card-bg);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(6px);
   color: var(--text);
@@ -95,7 +94,6 @@
   font-weight: 600;
   letter-spacing: 0.2px;
   cursor: pointer;
-  transition: transform 0.05s, box-shadow 0.2s, filter 0.2s;
 }
 
 .auth-btn:hover { 

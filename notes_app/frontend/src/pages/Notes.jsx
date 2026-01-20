@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./Notes.css";
 
 const API_URL = "http://localhost:5000/notes";
 
@@ -29,6 +30,7 @@ function Notes() {
     const res = await axios.get(API_URL, authConfig);
     setNotes(res.data);
   };
+
   const addNote = async () => {
     if (!title || !content || editingId) return;
 
@@ -42,6 +44,7 @@ function Notes() {
     setEditingId(note._id);
     setTitle(note.title);
     setContent(note.content);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const updateNote = async () => {
@@ -59,37 +62,87 @@ function Notes() {
     fetchNotes();
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setTitle("");
+    setContent("");
+  };
+
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Notes App</h2>
+    <div className="notes-container">
+      <button onClick={handleLogout} className="logout-btn">
+        Logout
+      </button>
 
-      <input
-        placeholder="Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-      />
-      <br /><br />
-
-      <textarea
-        placeholder="Content"
-        value={content}
-        onChange={e => setContent(e.target.value)}
-      />
-      <br /><br />
-
-      <button onClick={addNote}>Add Note</button>
-      <button onClick={updateNote} disabled={!editingId}>Update Note</button>
-
-      <hr />
-
-      {notes.map(note => (
-        <div key={note._id} style={{ marginBottom: "10px" }}>
-          <h4>{note.title}</h4>
-          <p>{note.content}</p>
-          <button onClick={() => beginEdit(note)}>Edit</button>
-          <button onClick={() => deleteNote(note._id)}>Delete</button>
+      <div className="notes-header">
+        <h2>My Notes</h2>
+        <p className="notes-count">
+          You have {notes.length} {notes.length === 1 ? 'note' : 'notes'}
+        </p>
+      </div>
+      <div className="note-form">
+        <div className="form-group">
+          <input
+            placeholder="Enter note title..."
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+          />
         </div>
-      ))}
+        
+        <div className="form-group">
+          <textarea
+            placeholder="Write your note content here..."
+            value={content}
+            onChange={e => setContent(e.target.value)}
+          />
+        </div>
+
+        <div className="form-actions">
+          {editingId && (
+            <button onClick={cancelEdit} className="btn btn-secondary">
+              Cancel
+            </button>
+          )}
+          {editingId ? (
+            <button onClick={updateNote} disabled={!editingId || !title || !content} className="btn btn-secondary">
+              Update Note
+            </button>
+          ) : (
+            <button onClick={addNote} disabled={!title || !content} className="btn btn-primary">
+              Add Note
+            </button>
+          )}
+        </div>
+      </div>
+
+      {notes.length === 0 ? (
+        <div className="empty-state">
+          <h3>No notes yet!</h3>
+          <p>Create your first note above to get started.</p>
+        </div>
+      ) : (
+        <div className="notes-grid">
+          {notes.map(note => (
+            <div key={note._id} className="note-card">
+              <h4>{note.title}</h4>
+              <p>{note.content}</p>
+              <div className="note-actions">
+                <button onClick={() => beginEdit(note)} className="btn-edit">
+                  Edit
+                </button>
+                <button onClick={() => deleteNote(note._id)} className="btn-delete">
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
