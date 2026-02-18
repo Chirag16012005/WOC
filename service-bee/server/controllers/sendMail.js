@@ -1,37 +1,39 @@
-import nodemailer from 'nodemailer';
+import axios from 'axios';
 
 const sendMail = async (to, subject, text, html = null) => {
     try {
-        const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
-            port: parseInt(process.env.SMTP_PORT) || 587,
-            secure: false,
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
+        const payload = {
+            sender: {
+                name: 'Service Bee',
+                email: process.env.BREVO_SENDER_EMAIL || 'noreply@servicebee.com',
             },
-        });
-
-
-
-        const mailOptions = {
-            from: `"Service Bee" <${process.env.SMTP_USER}>`,
-
-            to,
+            to: [{ email: to }],
             subject,
-            text,
+            textContent: text,
         };
 
         if (html) {
-            mailOptions.html = html;
+            payload.htmlContent = html;
         }
 
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent:', info.messageId);
-        return { success: true, messageId: info.messageId };
+        const response = await axios.post(
+            'https://api.brevo.com/v3/smtp/email',
+            payload,
+            {
+                headers: {
+                    'api-key': process.env.BREVO_API_KEY,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            }
+        );
+
+        console.log('Email sent via Brevo API:', response.data.messageId);
+        return { success: true, messageId: response.data.messageId };
     } catch (error) {
-        console.error('Error sending email:', error);
-        return { success: false, error: error.message };
+        const errMsg = error.response?.data?.message || error.message;
+        console.error('Error sending email:', errMsg);
+        return { success: false, error: errMsg };
     }
 };
 
