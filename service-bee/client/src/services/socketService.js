@@ -11,7 +11,8 @@ class SocketService {
             return this.socket;
         }
 
-        const SERVER_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'https://woc-2.onrender.com';
+
 
         this.socket = io(SERVER_URL, {
             auth: {

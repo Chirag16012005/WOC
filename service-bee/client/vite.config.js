@@ -8,7 +8,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://woc-2.onrender.com/',
+        target: 'https://woc-2.onrender.com',
         changeOrigin: true,
       },
     },
