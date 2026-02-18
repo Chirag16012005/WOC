@@ -1,0 +1,205 @@
+.companies-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 40px 20px;
+}
+
+.companies-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.bee-logo {
+    font-size: 50px;
+}
+
+.brand-name {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.page-subtitle {
+    font-size: 16px;
+    color: #666;
+}
+
+.loading {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    padding: 50px;
+}
+
+.error-message {
+    background-color: #fee;
+    color: #c33;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 0 auto 20px;
+    text-align: center;
+    font-size: 14px;
+    max-width: 600px;
+}
+
+.no-companies {
+    text-align: center;
+    padding: 50px;
+    color: #666;
+    font-size: 18px;
+}
+
+.companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto 30px;
+}
+
+.company-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.company-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.company-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.company-name {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.company-category {
+    font-size: 14px;
+    color: #f5a623;
+    font-weight: 600;
+    margin: 8px 0;
+    background: #fff3cd;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.company-email,
+.company-phone,
+.company-address {
+    font-size: 14px;
+    color: #666;
+    margin: 8px 0;
+}
+
+.company-rating {
+    margin: 20px 0;
+    padding: 15px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-bottom: 5px;
+}
+
+.star {
+    font-size: 24px;
+    color: #ddd;
+}
+
+.star.filled {
+    color: #f5a623;
+}
+
+.star.half {
+    color: #f5a623;
+    opacity: 0.5;
+}
+
+.rating-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.btn {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-complaint {
+    background-color: #f5a623;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-complaint:hover {
+    background-color: #e09517;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 166, 35, 0.3);
+}
+
+.btn-back {
+    background-color: white;
+    color: #333;
+    border: 2px solid #333;
+    display: block;
+    margin: 0 auto;
+    max-width: 300px;
+}
+
+.btn-back:hover {
+    background-color: #333;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .companies-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .brand-name {
+        font-size: 26px;
+    }
+}
