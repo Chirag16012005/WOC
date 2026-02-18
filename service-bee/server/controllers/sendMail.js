@@ -3,18 +3,20 @@ import nodemailer from 'nodemailer';
 const sendMail = async (to, subject, text, html = null) => {
     try {
         const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // IMPORTANT (false for 587)
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+            host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
+            port: parseInt(process.env.SMTP_PORT) || 587,
+            secure: false,
+            auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS,
+            },
+        });
+
 
 
         const mailOptions = {
-            from: `"Service Bee" <${process.env.EMAIL_USER}>`,
+            from: `"Service Bee" <${process.env.SMTP_USER}>`,
+
             to,
             subject,
             text,
